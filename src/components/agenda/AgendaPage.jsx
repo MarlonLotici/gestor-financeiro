@@ -5,7 +5,7 @@ import {
 } from 'lucide-react'
 import { formatBRL, formatDateFull } from '../../utils/formatters'
 import { categoryLabel, categoryColor } from '../../utils/categories'
-import { API_BASE_URL } from '../../utils/api'
+import { API_URL } from '../../utils/api'
 
 // ----------------------------------------------------------------
 // Helpers
@@ -207,7 +207,7 @@ export default function AgendaPage() {
   const load = useCallback(() => {
     setLoading(true)
     setError(false)
-    fetch(`${API_BASE_URL}/api/agenda`)
+    fetch(`${API_URL}/api/agenda`)
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then(d => {
         setSaidas(d.fluxoFuturoSaidas ?? [])
@@ -221,7 +221,7 @@ export default function AgendaPage() {
 
   // Remove o item da lista localmente após marcar como pago
   const handleMarkPaid = useCallback(async (id, status) => {
-    const res = await fetch(`${API_BASE_URL}/api/transactions/${id}/status`, {
+    const res = await fetch(`${API_URL}/api/transactions/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),

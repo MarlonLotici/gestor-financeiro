@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { RefreshCw, AlertTriangle } from 'lucide-react'
-import { API_BASE_URL } from '../../utils/api'
+import { API_URL } from '../../utils/api'
 import SummaryCards from './SummaryCards'
 import CashFlowChart from './CashFlowChart'
 import RevenueDistribution from './RevenueDistribution'
@@ -64,7 +64,7 @@ export default function DashboardPage() {
     setLoading(true)
     setError(false)
     // TODO: Trocar o mês dinamicamente quando implementar seletor de período
-    fetch(`${API_BASE_URL}/api/financial/dashboard?month=${currentMonth}`)
+    fetch(`${API_URL}/api/financial/dashboard?month=${currentMonth}`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()

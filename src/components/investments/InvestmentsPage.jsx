@@ -3,7 +3,7 @@ import { TrendingUp, ArrowUpRight, AlertCircle, RefreshCw, Layers } from 'lucide
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { formatBRL, formatDateFull, calcPercent } from '../../utils/formatters'
 import { categoryLabel, categoryColor } from '../../utils/categories'
-import { API_BASE_URL } from '../../utils/api'
+import { API_URL } from '../../utils/api'
 
 // Paleta fallback para categorias sem cor definida
 const PALETTE = ['#34d399', '#f59e0b', '#6366f1', '#fb923c', '#22d3ee', '#a78bfa']
@@ -216,7 +216,7 @@ export default function InvestmentsPage() {
   const load = useCallback(() => {
     setLoading(true)
     setError(false)
-    fetch(`${API_BASE_URL}/api/investments`)
+    fetch(`${API_URL}/api/investments`)
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then(d => { setData(d); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
