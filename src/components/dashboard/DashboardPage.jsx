@@ -37,7 +37,7 @@ function ErrorState({ onRetry }) {
       <div>
         <p className="text-sm font-semibold text-slate-300">Erro ao carregar o dashboard</p>
         <p className="text-xs text-slate-500 mt-1">
-          Verifique se a API está rodando em localhost:3001
+          Não foi possível conectar à API. Tente novamente.
         </p>
       </div>
       <button
