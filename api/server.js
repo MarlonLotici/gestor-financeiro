@@ -2,9 +2,13 @@ import 'dotenv/config'
 import express from 'express'
 import { createClient } from '@supabase/supabase-js'
 
+if (!process.env.FINANCE_SUPABASE_URL || !process.env.FINANCE_SUPABASE_KEY) {
+  console.warn('[motor-financeiro-api] AVISO: FINANCE_SUPABASE_URL ou FINANCE_SUPABASE_KEY não definidas — rotas do banco falharão.')
+}
+
 const supabase = createClient(
-  process.env.FINANCE_SUPABASE_URL,
-  process.env.FINANCE_SUPABASE_KEY,
+  process.env.FINANCE_SUPABASE_URL ?? '',
+  process.env.FINANCE_SUPABASE_KEY ?? '',
 )
 
 const app = express()
@@ -346,4 +350,10 @@ app.get('/health', (_, res) => {
 })
 
 const PORT = process.env.PORT ?? 3001
-app.listen(PORT, () => console.log(`[motor-financeiro-api] rodando em http://localhost:${PORT}`))
+
+// '0.0.0.0' é obrigatório na Railway: o proxy externo não alcança 127.0.0.1
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[motor-financeiro-api] ✓ servidor ouvindo em 0.0.0.0:${PORT}`)
+  console.log(`[motor-financeiro-api] Supabase  : ${process.env.FINANCE_SUPABASE_URL ? process.env.FINANCE_SUPABASE_URL : 'AUSENTE'}`)
+  console.log(`[motor-financeiro-api] Grupo ID  : ${process.env.FINANCE_GROUP_ID  || 'não filtrado (aceita qualquer origem)'}`)
+})
